@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selfit — Reverse-Search Styling Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">S</span>
+        <span class="logo-text">Selfit</span>
+        <span class="logo-tag">BETA</span>
+      </div>
+      <nav class="header-nav">
+        <span class="nav-item active">Studio</span>
+        <span class="nav-item">My Fits</span>
+        <span class="nav-item">Explore</span>
+      </nav>
+      <div class="header-right">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          AI Engine Active
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main id="app">
+
+    <!-- LEFT PANEL: Controls -->
+    <section id="panel-left">
+      <div class="panel-title">
+        <span class="panel-icon">⚙</span>
+        Fit Configuration
+      </div>
+
+      <!-- Garment Selector -->
+      <div class="control-group">
+        <label class="group-label">Garment Type</label>
+        <div class="garment-tabs">
+          <button class="garment-tab active" data-type="tshirt">T-Shirt</button>
+          <button class="garment-tab" data-type="hoodie">Hoodie</button>
+          <button class="garment-tab" data-type="shirt">Shirt</button>
+        </div>
+      </div>
+
+      <!-- Gender Selector -->
+      <div class="control-group">
+        <label class="group-label">Silhouette</label>
+        <div class="gender-tabs">
+          <button class="gender-tab active" data-gender="neutral">Neutral</button>
+          <button class="gender-tab" data-gender="masc">Masc</button>
+          <button class="gender-tab" data-gender="fem">Fem</button>
+        </div>
+      </div>
+
+      <!-- Dimension Sliders -->
+      <div class="control-group">
+        <label class="group-label">Dimensions</label>
+
+        <div class="slider-block">
+          <div class="slider-header">
+            <span class="slider-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"/><polyline points="17 7 12 2 7 7"/><polyline points="17 17 12 22 7 17"/></svg>
+              Length
+            </span>
+            <div class="slider-value-box">
+              <span id="display-length">66</span>
+              <span class="unit">cm</span>
+            </div>
+          </div>
+          <div class="slider-track-wrap">
+            <input type="range" id="slider-length" min="40" max="90" value="66" step="1" />
+            <div class="slider-range-labels">
+              <span>Crop (40cm)</span>
+              <span>Long (90cm)</span>
+            </div>
+          </div>
+          <div class="slider-presets">
+            <button class="preset-chip" data-slider="length" data-val="48">Crop</button>
+            <button class="preset-chip" data-slider="length" data-val="66">Regular</button>
+            <button class="preset-chip" data-slider="length" data-val="78">Longline</button>
+          </div>
+        </div>
+
+        <div class="slider-block">
+          <div class="slider-header">
+            <span class="slider-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="12" x2="22" y2="12"/><polyline points="7 7 2 12 7 17"/><polyline points="17 7 22 12 17 17"/></svg>
+              Width
+            </span>
+            <div class="slider-value-box">
+              <span id="display-width">145</span>
+              <span class="unit">cm</span>
+            </div>
+          </div>
+          <div class="slider-track-wrap">
+            <input type="range" id="slider-width" min="100" max="200" value="145" step="1" />
+            <div class="slider-range-labels">
+              <span>Slim (100cm)</span>
+              <span>Oversized (200cm)</span>
+            </div>
+          </div>
+          <div class="slider-presets">
+            <button class="preset-chip" data-slider="width" data-val="120">Slim</button>
+            <button class="preset-chip" data-slider="width" data-val="145">Standard</button>
+            <button class="preset-chip" data-slider="width" data-val="180">Oversized</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fit Summary -->
+      <div class="fit-summary">
+        <div class="fit-summary-title">Fit Profile</div>
+        <div class="fit-summary-grid">
+          <div class="fit-stat">
+            <span class="fit-stat-label">Length</span>
+            <span class="fit-stat-val" id="summary-length">66 cm</span>
+          </div>
+          <div class="fit-stat">
+            <span class="fit-stat-label">Width</span>
+            <span class="fit-stat-val" id="summary-width">145 cm</span>
+          </div>
+          <div class="fit-stat">
+            <span class="fit-stat-label">Fit Type</span>
+            <span class="fit-stat-val" id="summary-type">Standard</span>
+          </div>
+          <div class="fit-stat">
+            <span class="fit-stat-label">Silhouette</span>
+            <span class="fit-stat-val" id="summary-sil">Regular</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Button -->
+      <button id="btn-search" class="btn-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search Matching Clothes
+      </button>
+      <p class="search-hint">Scanning <span id="db-count">4</span> items in real-time</p>
+    </section>
+
+    <!-- CENTER: Viewport -->
+    <section id="viewport">
+      <div class="viewport-label">LIVE PREVIEW</div>
+
+      <div id="studio">
+        <div id="studio-bg"></div>
+
+        <!-- SVG Mannequin + Clothing overlay -->
+        <div id="avatar-wrap">
+          <svg id="mannequin-svg" viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg">
+            <!-- Defs -->
+            <defs>
+              <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#c8a87a;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#a8885a;stop-opacity:1"/>
+              </linearGradient>
+              <linearGradient id="clothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3a3aff;stop-opacity:0.95" id="cloth-stop-1"/>
+                <stop offset="100%" style="stop-color:#0055ff;stop-opacity:0.9" id="cloth-stop-2"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="soft-shadow">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+              </filter>
+              <clipPath id="body-clip">
+                <rect x="0" y="0" width="200" height="480"/>
+              </clipPath>
+            </defs>
+
+            <!-- === MANNEQUIN BODY === -->
+            <!-- Legs -->
+            <rect x="73" y="310" width="22" height="145" rx="8" fill="url(#skinGrad)" opacity="0.85"/>
+            <rect x="105" y="310" width="22" height="145" rx="8" fill="url(#skinGrad)" opacity="0.85"/>
+            <!-- Shoes -->
+            <ellipse cx="84" cy="458" rx="16" ry="7" fill="#2a2a2e"/>
+            <ellipse cx="116" cy="458" rx="16" ry="7" fill="#2a2a2e"/>
+
+            <!-- Torso -->
+            <path d="M65 155 Q60 200 62 280 Q70 310 100 312 Q130 310 138 280 Q140 200 135 155 Z" fill="url(#skinGrad)" opacity="0.9"/>
+
+            <!-- Pelvis/Hips area -->
+            <ellipse cx="100" cy="305" rx="38" ry="14" fill="url(#skinGrad)" opacity="0.85"/>
+
+            <!-- Neck -->
+            <rect x="91" y="105" width="18" height="48" rx="6" fill="url(#skinGrad)"/>
+
+            <!-- Head -->
+            <ellipse cx="100" cy="82" rx="30" ry="35" fill="url(#skinGrad)" filter="url(#soft-shadow)"/>
+            <!-- Face subtle features -->
+            <ellipse cx="91" cy="78" rx="5" ry="6" fill="#a8785a" opacity="0.4"/>
+            <ellipse cx="109" cy="78" rx="5" ry="6" fill="#a8785a" opacity="0.4"/>
+            <path d="M93 92 Q100 98 107 92" stroke="#a8785a" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <!-- Hair -->
+            <ellipse cx="100" cy="52" rx="30" ry="18" fill="#2a1a0a"/>
+            <ellipse cx="100" cy="48" rx="28" ry="14" fill="#3a2a1a"/>
+
+            <!-- Arms -->
+            <!-- Left upper arm -->
+            <path d="M65 160 Q42 175 38 230 Q36 250 42 265" stroke="url(#skinGrad)" stroke-width="20" fill="none" stroke-linecap="round"/>
+            <!-- Left forearm -->
+            <path d="M42 265 Q38 290 40 315" stroke="url(#skinGrad)" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <!-- Left hand -->
+            <ellipse cx="40" cy="322" rx="10" ry="13" fill="url(#skinGrad)"/>
+
+            <!-- Right upper arm -->
+            <path d="M135 160 Q158 175 162 230 Q164 250 158 265" stroke="url(#skinGrad)" stroke-width="20" fill="none" stroke-linecap="round"/>
+            <!-- Right forearm -->
+            <path d="M158 265 Q162 290 160 315" stroke="url(#skinGrad)" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <!-- Right hand -->
+            <ellipse cx="160" cy="322" rx="10" ry="13" fill="url(#skinGrad)"/>
+
+            <!-- === CLOTHING OVERLAY (dynamic) === -->
+            <!-- Main shirt body -->
+            <g id="clothing-group" filter="url(#soft-shadow)">
+              <!-- Shirt body -->
+              <path id="shirt-body"
+                d="M52 155 L148 155 L148 265 Q100 275 52 265 Z"
+                fill="url(#clothGrad)"
+                opacity="0.95"/>
+
+              <!-- Left sleeve -->
+              <path id="shirt-sleeve-left"
+                d="M52 155 Q30 165 26 205 Q24 220 30 228 Q42 218 52 205 Z"
+                fill="url(#clothGrad)"
+                opacity="0.95"/>
+
+              <!-- Right sleeve -->
+              <path id="shirt-sleeve-right"
+                d="M148 155 Q170 165 174 205 Q176 220 170 228 Q158 218 148 205 Z"
+                fill="url(#clothGrad)"
+                opacity="0.95"/>
+
+              <!-- Collar -->
+              <path id="shirt-collar"
+                d="M85 155 Q100 168 115 155"
+                stroke="#5566ff"
+                stroke-width="2"
+                fill="none"
+                opacity="0.8"/>
+
+              <!-- Hem line (bottom edge) -->
+              <path id="shirt-hem"
+                d="M52 265 Q100 275 148 265"
+                stroke="#6677ff"
+                stroke-width="1.5"
+                fill="none"
+                opacity="0.6"/>
+
+              <!-- Subtle fabric shading lines -->
+              <line x1="80" y1="165" x2="78" y2="255" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <line x1="100" y1="162" x2="100" y2="260" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <line x1="120" y1="165" x2="122" y2="255" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            </g>
+
+            <!-- Measurement guides (shown on hover/active) -->
+            <g id="measure-guides" opacity="0">
+              <!-- Length arrow -->
+              <line x1="158" y1="155" x2="158" y2="265" stroke="#0a84ff" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="153" y1="155" x2="163" y2="155" stroke="#0a84ff" stroke-width="1.5"/>
+              <line x1="153" y1="265" x2="163" y2="265" stroke="#0a84ff" stroke-width="1.5"/>
+              <text x="166" y="215" fill="#0a84ff" font-size="9" font-family="Inter" font-weight="600" id="guide-length-label">66cm</text>
+
+              <!-- Width arrow -->
+              <line x1="52" y1="175" x2="148" y2="175" stroke="#0a84ff" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="52" y1="170" x2="52" y2="180" stroke="#0a84ff" stroke-width="1.5"/>
+              <line x1="148" y1="170" x2="148" y2="180" stroke="#0a84ff" stroke-width="1.5"/>
+              <text x="85" y="170" fill="#0a84ff" font-size="9" font-family="Inter" font-weight="600" id="guide-width-label">145cm</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Floating dim display -->
+        <div id="dim-display">
+          <div class="dim-item">
+            <span class="dim-icon">↕</span>
+            <span id="dim-length-val">66</span>
+            <span class="dim-unit">cm</span>
+          </div>
+          <div class="dim-divider"></div>
+          <div class="dim-item">
+            <span class="dim-icon">↔</span>
+            <span id="dim-width-val">145</span>
+            <span class="dim-unit">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fit type badge -->
+      <div id="fit-badge">Standard Fit</div>
+    </section>
+
+    <!-- RIGHT PANEL: Results -->
+    <section id="panel-right">
+      <div class="panel-title">
+        <span class="panel-icon">✦</span>
+        Match Results
+        <span id="result-count-badge" class="count-badge hidden">0</span>
+      </div>
+
+      <!-- Idle state -->
+      <div id="results-idle">
+        <div class="idle-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <p class="idle-title">Design Your Fit</p>
+        <p class="idle-sub">Adjust the sliders and click<br/><em>Search Matching Clothes</em><br/>to find real items.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div id="results-loading" class="hidden">
+        <div class="loading-bars">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <p class="loading-text">Scanning database...</p>
+        <p class="loading-sub">Calculating dimensional variance</p>
+      </div>
+
+      <!-- No match state -->
+      <div id="results-empty" class="hidden">
+        <div class="empty-icon">✕</div>
+        <p class="empty-title">No Perfect Match</p>
+        <p class="empty-sub">No items perfectly match this fit right now.<br/>Try adjusting your dimensions slightly.</p>
+        <div id="closest-hint" class="closest-hint"></div>
+      </div>
+
+      <!-- Results list -->
+      <div id="results-list" class="hidden"></div>
+
+      <!-- Match threshold legend -->
+      <div id="match-legend" class="hidden">
+        <div class="legend-item"><span class="legend-dot green"></span> 80–100% Perfect match</div>
+        <div class="legend-item"><span class="legend-dot blue"></span> 60–79% Good match</div>
+        <div class="legend-item"><span class="legend-dot gray"></span> Below 60% Approximate</div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
